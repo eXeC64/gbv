@@ -4,7 +4,13 @@
 #include <stdint.h>
 
 typedef struct {
-    uint8_t* mem;
+    uint8_t* mem; /* Working memory    */
+    uint16_t af;  /* A and F registers */
+    uint16_t bc;  /* B and C registers */
+    uint16_t de;  /* D and E registers */
+    uint16_t hl;  /* H and L registers */
+    uint16_t sp;  /* Stack pointer     */
+    uint16_t pc;  /* Program counter   */
 } gameboy_t;
 
 int8_t gameboy_init(gameboy_t* gb);
