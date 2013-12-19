@@ -44,4 +44,31 @@
 #define R_OCPS  0xFF6A
 #define R_OCPD  0xFF6B
 
+/* sound registers */
+#define R_NR10 0xFF10
+#define R_NR11 0xFF11
+#define R_NR12 0xFF12
+#define R_NR13 0xFF13
+#define R_NR14 0xFF14
+
+#define R_NR21 0xFF16
+#define R_NR22 0xFF17
+#define R_NR23 0xFF18
+#define R_NR24 0xFF19
+
+#define R_NR30 0xFF1A
+#define R_NR31 0xFF1B
+#define R_NR32 0xFF1C
+#define R_NR33 0xFF1D
+#define R_NR34 0xFF1E
+
+#define R_NR41 0xFF20
+#define R_NR42 0xFF21
+#define R_NR43 0xFF22
+#define R_NR44 0xFF23
+
+#define R_NR50 0xFF24
+#define R_NR51 0xFF25
+#define R_NR52 0xFF26
+
 #endif /* REGISTERS_H */
