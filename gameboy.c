@@ -90,6 +90,12 @@ int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len)
     } else if(type >= 0x19 && type <= 0x1E) {
         gb->mbc = 5;
     }
+    printf("using mbc%i\n", gb->mbc);
+
+    gb->has_timer = 0;
+    if(type == 0x0F || type == 0x10) {
+        gb->has_timer = 1;
+    }
 
     int rom_size = gb->rom_bank[0][0x148];
     if(rom_size == 0) {
