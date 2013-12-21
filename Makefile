@@ -1,7 +1,7 @@
 #Makefile for gbv
 
 SOURCES = main.c gameboy.c
-CFLAGS += -std=c99 -g
+CFLAGS += -std=c99 -g -Wall
 
 all: gbv
 
