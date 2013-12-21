@@ -12,9 +12,12 @@ int8_t gameboy_init(gameboy_t* gb)
         return -EINVAL;
     }
 
-    memset(gb->header, 0x00, 0x50);
     memset(gb->rom_bank, 0x00, 0x100 * sizeof(uint8_t*));
     memset(gb->ram_bank, 0x00, 0x004 * sizeof(uint8_t*));
+    gb->mbc = 0;
+    gb->num_rom_banks = 0;
+    gb->has_timer = 0;
+
     return 0;
 }
 
