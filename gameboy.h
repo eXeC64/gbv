@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 typedef struct {
-    uint8_t* mem; /* Working memory    */
     uint16_t af;  /* A and F registers */
     uint16_t bc;  /* B and C registers */
     uint16_t de;  /* D and E registers */
