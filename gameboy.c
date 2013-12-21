@@ -11,6 +11,9 @@ int8_t gameboy_init(gameboy_t* gb)
     if(!gb) {
         return -EINVAL;
     }
+
+    memset(gb->header, 0x00, 0x50);
+    memset(gb->bank, 0x00, 0x100 * sizeof(uint8_t*));
     return 0;
 }
 

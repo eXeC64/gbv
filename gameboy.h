@@ -10,6 +10,9 @@ typedef struct {
     uint16_t hl;  /* H and L registers */
     uint16_t sp;  /* Stack pointer     */
     uint16_t pc;  /* Program counter   */
+
+    uint8_t header[0x50]; /* Cartridge header 0x100-0x14F */
+    uint8_t* bank[0x100]; /* Array of bank pointers.      */
 } gameboy_t;
 
 int8_t gameboy_init(gameboy_t* gb);
