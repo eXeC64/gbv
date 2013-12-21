@@ -13,7 +13,8 @@ int8_t gameboy_init(gameboy_t* gb)
     }
 
     memset(gb->header, 0x00, 0x50);
-    memset(gb->bank, 0x00, 0x100 * sizeof(uint8_t*));
+    memset(gb->rom_bank, 0x00, 0x100 * sizeof(uint8_t*));
+    memset(gb->ram_bank, 0x00, 0x004 * sizeof(uint8_t*));
     return 0;
 }
 
@@ -24,8 +25,13 @@ int8_t gameboy_close(gameboy_t* gb)
     }
 
     for(int i = 0; i < 0x100; ++i) {
-        if(gb->bank[i]) {
-            free(gb->bank[i]);
+        if(gb->rom_bank[i]) {
+            free(gb->rom_bank[i]);
+        }
+    }
+    for(int i = 0; i < 0x4; ++i) {
+        if(gb->ram_bank[i]) {
+            free(gb->ram_bank[i]);
         }
     }
     return 0;

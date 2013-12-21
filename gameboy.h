@@ -11,8 +11,9 @@ typedef struct {
     uint16_t sp;  /* Stack pointer     */
     uint16_t pc;  /* Program counter   */
 
-    uint8_t header[0x50]; /* Cartridge header 0x100-0x14F */
-    uint8_t* bank[0x100]; /* Array of bank pointers.      */
+    uint8_t header[0x50];     /* Cartridge header 0x100-0x14F */
+    uint8_t* rom_bank[0x100]; /* Array of rom bank pointers   */
+    uint8_t* ram_bank[0x4];   /* Array of ram bank pointers.  */
 } gameboy_t;
 
 int8_t gameboy_init(gameboy_t* gb);
