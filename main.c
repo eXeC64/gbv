@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
     int err;
-    gameboy_t gb;
+    gb_t gb;
 
     if(argc != 2) {
         printf("Usage: %s file\n", argv[0]);
@@ -14,8 +14,8 @@ int main(int argc, char** argv)
     }
 
     puts("gbv starting");
-    if((err = gameboy_init(&gb)) != 0) {
-        printf("Error: gameboy_init returned %i\n", err);
+    if((err = gb_init(&gb)) != 0) {
+        printf("Error: gb_init returned %i\n", err);
         exit(-EINVAL);
     }
 
@@ -39,12 +39,12 @@ int main(int argc, char** argv)
     }
 
     printf("Loading \"%s\" (%i bytes)\n", argv[1], rom_size);
-    if((err = gameboy_load(&gb, rom, rom_size)) != 0) {
-        printf("Error: gameboy_load returned %i\n", err);
+    if((err = gb_load(&gb, rom, rom_size)) != 0) {
+        printf("Error: gb_load returned %i\n", err);
         exit(-EINVAL);
     }
 
-    gameboy_close(&gb);
+    gb_close(&gb);
     puts("gbv done");
 
     return 0;

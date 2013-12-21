@@ -7,7 +7,7 @@
 #include <string.h>
 #include <errno.h>
 
-int8_t gameboy_init(gameboy_t* gb)
+int8_t gb_init(gb_t* gb)
 {
     if(!gb) {
         return -EINVAL;
@@ -22,7 +22,7 @@ int8_t gameboy_init(gameboy_t* gb)
     return 0;
 }
 
-int8_t gameboy_close(gameboy_t* gb)
+int8_t gb_close(gb_t* gb)
 {
     if(!gb) {
         return -EINVAL;
@@ -41,7 +41,7 @@ int8_t gameboy_close(gameboy_t* gb)
     return 0;
 }
 
-int8_t gameboy_reset(gameboy_t* gb)
+int8_t gb_reset(gb_t* gb)
 {
     if(!gb) {
         return -EINVAL;
@@ -57,7 +57,7 @@ int8_t gameboy_reset(gameboy_t* gb)
     return 0;
 }
 
-int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len)
+int8_t gb_load(gb_t* gb, uint8_t* rom, size_t len)
 {
     /* Check we can fill the first rom bank */
     if(len < 0x4000) {
@@ -174,7 +174,7 @@ int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len)
     return 0;
 }
 
-int8_t gameboy_step(gameboy_t* gb)
+int8_t gb_step(gb_t* gb)
 {
     return -ENOSYS;
 }

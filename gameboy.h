@@ -19,12 +19,12 @@ typedef struct {
     uint16_t num_rom_banks;   /* The quantity of rom banks to use */
     uint8_t  num_ram_banks;   /* The quantity of ram banks to use */
     uint16_t ram_size;        /* How much ram there is in total   */
-} gameboy_t;
+} gb_t;
 
-int8_t gameboy_init(gameboy_t* gb);
-int8_t gameboy_close(gameboy_t* gb);
-int8_t gameboy_reset(gameboy_t* gb);
-int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len);
-int8_t gameboy_step(gameboy_t* gb);
+int8_t gb_init(gb_t* gb);
+int8_t gb_close(gb_t* gb);
+int8_t gb_reset(gb_t* gb);
+int8_t gb_load(gb_t* gb, uint8_t* rom, size_t len);
+int8_t gb_step(gb_t* gb);
 
 #endif /* GAMEBOY_H */
