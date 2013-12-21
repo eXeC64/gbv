@@ -2,6 +2,7 @@
 #define GAMEBOY_H
 
 #include <stdint.h>
+#include <stdlib.h>
 
 typedef struct {
     uint16_t af;  /* A and F registers */
@@ -19,7 +20,7 @@ typedef struct {
 int8_t gameboy_init(gameboy_t* gb);
 int8_t gameboy_close(gameboy_t* gb);
 int8_t gameboy_reset(gameboy_t* gb);
-int8_t gameboy_load(gameboy_t* gb, uint8_t* rom);
+int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len);
 int8_t gameboy_step(gameboy_t* gb);
 
 #endif /* GAMEBOY_H */
