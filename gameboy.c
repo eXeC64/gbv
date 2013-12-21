@@ -57,3 +57,8 @@ int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len)
 {
     return -ENOSYS;
 }
+
+int8_t gameboy_step(gameboy_t* gb)
+{
+    return -ENOSYS;
+}
