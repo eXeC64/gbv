@@ -22,6 +22,12 @@ int8_t gameboy_close(gameboy_t* gb)
     if(!gb) {
         return -EINVAL;
     }
+
+    for(int i = 0; i < 0x100; ++i) {
+        if(gb->bank[i]) {
+            free(gb->bank[i]);
+        }
+    }
     return 0;
 }
 
