@@ -120,20 +120,28 @@ int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len)
             gb->num_rom_banks * 8192,
             gb->num_rom_banks);
 
-    int ram_size;
     if(gb->rom_bank[0][0x149] == 0) {
-        ram_size = 0;  /* none!? */
+        gb->num_ram_banks = 0; /* none!? */
+        gb->ram_size = 0;
     } else if(gb->rom_bank[0][0x149] == 1) {
-        ram_size = 0x800;  /*  2KB */
+        gb->num_ram_banks = 1;
+        gb->ram_size = 0x800;  /*  2KB */
     } else if(gb->rom_bank[0][0x149] == 2) {
-        ram_size = 0x2000; /*  8KB */
+        gb->num_ram_banks = 1;
+        gb->ram_size = 0x2000; /*  8KB */
     } else if(gb->rom_bank[0][0x149] == 3) {
-        ram_size = 0x8000; /* 16KB */
+        gb->num_ram_banks = 4; /* 4 8KB banks */
+        gb->ram_size = 0x8000; /* 16KB total */
     } else {
         fprintf(stderr, "invalid ram_size %i in header\n", gb->rom_bank[0][0x149]);
         return -EINVAL;
     }
-    printf("ram size: %#x (%i bytes)\n", ram_size, ram_size);
+
+    printf("ram size: %#x (%i bytes across %i ban%s)\n",
+            gb->ram_size,
+            gb->ram_size,
+            gb->num_ram_banks,
+            gb->num_ram_banks > 1 ? "ks" : "k");
 
     puts("loading rom banks");
     /* Create and fill the other rom banks */
@@ -149,7 +157,13 @@ int8_t gameboy_load(gameboy_t* gb, uint8_t* rom, size_t len)
 
     puts("rom banks loaded");
 
+    puts("creating ram banks");
     /* Create the ram banks */
+    for(int i = 0; i < gb->num_ram_banks; ++i) {
+        uint8_t* b = malloc(gb->ram_size >= 0x8000 ? 0x8000 : gb->ram_size);
+        gb->ram_bank[i] = b;
+    }
+    puts("ram banks created");
 
     return 0;
 }

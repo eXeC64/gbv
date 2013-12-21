@@ -17,6 +17,8 @@ typedef struct {
     uint8_t* rom_bank[0x100]; /* Array of rom bank pointers       */
     uint8_t* ram_bank[0x4];   /* Array of ram bank pointers.      */
     uint16_t num_rom_banks;   /* The quantity of rom banks to use */
+    uint8_t  num_ram_banks;   /* The quantity of ram banks to use */
+    uint16_t ram_size;        /* How much ram there is in total   */
 } gameboy_t;
 
 int8_t gameboy_init(gameboy_t* gb);
