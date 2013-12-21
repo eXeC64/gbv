@@ -137,7 +137,7 @@ int8_t gb_load(gb_t* gb, uint8_t* rom, size_t len)
         gb->ram_size = 0x2000; /*  8KB */
     } else if(gb->rom_bank[0][0x149] == 3) {
         gb->num_ram_banks = 4; /* 4 8KB banks */
-        gb->ram_size = 0x8000; /* 16KB total */
+        gb->ram_size = 0x8000; /* 32KB total */
     } else {
         fprintf(stderr, "invalid ram_size %i in header\n", gb->rom_bank[0][0x149]);
         return -EINVAL;
