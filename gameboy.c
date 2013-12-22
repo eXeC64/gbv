@@ -18,6 +18,8 @@ int8_t gb_init(gb_t* gb)
     gb->mbc = 0;
     gb->num_rom_banks = 0;
     gb->has_timer = 0;
+    gb->cur_rom_bank = 0;
+    gb->cur_ram_bank = 0;
 
     return 0;
 }
@@ -176,5 +178,66 @@ int8_t gb_load(gb_t* gb, uint8_t* rom, size_t len)
 
 int8_t gb_step(gb_t* gb)
 {
+    return -ENOSYS;
+}
+
+int8_t gb_mem_read(gb_t* gb, uint16_t addr, uint8_t* val)
+{
+    if(!gb) {
+        return -EINVAL;
+    }
+
+    if(addr >= 0 && addr < 0x4000) {
+        *val = gb->rom_bank[0][addr];
+        return 0;
+    }
+
+    if(addr >= 0x4000 && addr < 0x8000) {
+        /* MBC 0 is bank 1, otherwise currently selected bank */
+        *val = gb->rom_bank[gb->mbc ? gb->cur_rom_bank : 1][addr - 0x4000];
+        return 0;
+    }
+
+    if(addr >= 0xA000 && addr < 0xC000) {
+        /* TODO - handle rtc register read */
+        /* Provide only the first bank if that's all we have */
+        int bank = gb->ram_size <= 0x2000 ? 0 : gb->cur_ram_bank;
+        *val = gb->ram_bank[bank][addr - 0xA000];
+        return 0;
+    }
+
+    /* Not covered? Invalid address to read. */
+    return -EINVAL;
+}
+
+int8_t gb_mem_write(gb_t* gb, uint16_t addr, uint8_t val)
+{
+    if(!gb) {
+        return -EINVAL;
+    }
+
+    if(addr >= 0 && addr < 0x2000) {
+        /* ram enable */
+    }
+
+    if(addr >= 0x2000 && addr < 0x4000) {
+        /* rom selection */
+    }
+
+    if(addr >= 0x4000 && addr < 0x6000) {
+        /* ram selection */
+    }
+
+    if(addr >= 0x6000 && addr < 0x8000) {
+        /* latch clock data */
+    }
+
+    if(addr >= 0xA000 && addr < 0xC000) {
+        /* TODO - handle rtc register write */
+        int bank = gb->ram_size <= 0x2000 ? 0 : gb->cur_ram_bank;
+        gb->ram_bank[bank][addr - 0xA000] = val;
+        return 0;
+    }
+
     return -ENOSYS;
 }
