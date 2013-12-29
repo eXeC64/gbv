@@ -199,11 +199,13 @@ int8_t gb_mem_read(gb_t* gb, uint16_t addr, uint8_t* val)
     }
 
     if(addr >= 0xA000 && addr < 0xC000) {
-        /* TODO - handle rtc register read */
-        /* Provide only the first bank if that's all we have */
-        int bank = gb->ram_size <= 0x2000 ? 0 : gb->cur_ram_bank;
-        *val = gb->ram_bank[bank][addr - 0xA000];
-        return 0;
+        if(gb->ram_enabled) {
+            /* TODO - handle rtc register read */
+            /* Provide only the first bank if that's all we have */
+            int bank = gb->ram_size <= 0x2000 ? 0 : gb->cur_ram_bank;
+            *val = gb->ram_bank[bank][addr - 0xA000];
+            return 0;
+        }
     }
 
     /* Not covered? Invalid address to read. */
@@ -218,6 +220,14 @@ int8_t gb_mem_write(gb_t* gb, uint16_t addr, uint8_t val)
 
     if(addr >= 0 && addr < 0x2000) {
         /* ram enable */
+        if(gb->mbc) {
+            if(val & 0x0F == 0x0A) {
+                gb->ram_enabled = 1;
+            } else {
+                gb->ram_enabled = 0;
+            }
+            return 0;
+        }
     }
 
     if(addr >= 0x2000 && addr < 0x4000) {
@@ -233,11 +243,13 @@ int8_t gb_mem_write(gb_t* gb, uint16_t addr, uint8_t val)
     }
 
     if(addr >= 0xA000 && addr < 0xC000) {
-        /* TODO - handle rtc register write */
-        int bank = gb->ram_size <= 0x2000 ? 0 : gb->cur_ram_bank;
-        gb->ram_bank[bank][addr - 0xA000] = val;
-        return 0;
+        if(gb->ram_enabled) {
+            /* TODO - handle rtc register write */
+            int bank = gb->ram_size <= 0x2000 ? 0 : gb->cur_ram_bank;
+            gb->ram_bank[bank][addr - 0xA000] = val;
+            return 0;
+        }
     }
 
-    return -ENOSYS;
+    return -EINVAL;
 }

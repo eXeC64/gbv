@@ -19,6 +19,7 @@ typedef struct {
     uint16_t num_rom_banks;   /* The quantity of rom banks to use */
     uint8_t  num_ram_banks;   /* The quantity of ram banks to use */
     uint16_t ram_size;        /* How much ram there is in total   */
+    uint8_t  ram_enabled;     /* Is the ram enabled currently?    */
     uint16_t cur_rom_bank;    /* The currently mapped rom bank    */
     uint8_t  cur_ram_bank;    /* The currently mapped ram bank    */
 } gb_t;
